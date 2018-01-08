@@ -51,6 +51,7 @@ export class AppComponent {
         this.getMessages();
         this.getConnections();
         this.errorMsg = '';
+        this.message = '';
 
       },
       (error) => {
