@@ -5,8 +5,10 @@ import {
     CREATE_USER_URL,
     GET_CONECTIONS_USER_URL,
     GET_MESSAGES_URL,
+    GET_POPULAR_USER_URL,
     GET_USER_URL,
     POST_MESSAGE_URL,
+    GET_POPULAR_FOLLOWER_URL,
 } from '../../shared/constants';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
@@ -28,6 +30,18 @@ export class TweeterService {
            .catch( this.errorHandler);
   }
 
+  getMostPopularFollower() {
+    return this.http.get(GET_POPULAR_FOLLOWER_URL)
+           .map((response: Response) => response.json())
+           .catch( this.errorHandler);
+  }
+
+  getMostPopularUser() {
+    return this.http.get(GET_POPULAR_USER_URL)
+           .map((response: Response) => response.json())
+           .catch( this.errorHandler);
+  }
+
   getConnections(userName: string) {
     return this.http.get(GET_CONECTIONS_USER_URL + userName)
            .map((response: Response) => response.json())
@@ -44,6 +58,12 @@ export class TweeterService {
     console.log(message);
     return this.http.post(POST_MESSAGE_URL, message)
            .map((response: Response) => console.log('message posted'))
+           .catch( this.errorHandler);
+  }
+
+  unfollow(userName: string, unfollowUserName: String) {
+    return this.http.post('/tweeter/' + userName + '/unfollow/' + unfollowUserName, null)
+           .map((response: Response) => console.log('unfollowed..'))
            .catch( this.errorHandler);
   }
 

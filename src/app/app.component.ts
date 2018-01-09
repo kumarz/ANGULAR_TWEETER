@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Http, Response} from '@angular/http';
 import {
     CREATE_USER_FAILURE_MESSAGE,
@@ -8,6 +8,7 @@ import {
     POST_MESSAGE_FAILURE_MESSAGE,
     POST_MESSAGE_SUCCESS_MESSAGE,
     USER_NOT_FOUND_MESSAGE,
+    UNFOLLOW_USER_MESSAGE_SUCCESS_MESSAGE,
 } from './shared/constants';
 import { User } from './shared/user';
 import { TweeterService } from './service/tweeter/tweeter.service';
@@ -19,9 +20,10 @@ import { Message } from './shared/message';
   styleUrls: ['./app.component.css'],
   providers: [TweeterService]
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
   constructor( private http: Http, private tweeterService: TweeterService) {
   }
+
   title = 'Tweeter app';
   userName = '';
   errorMsg = '';
@@ -40,7 +42,12 @@ export class AppComponent {
   email: string;
   showSuccess: boolean;
   showFailure: boolean;
+  mostPopular: any;
+  popularFollowers: Array<any> = [];
 
+  ngOnInit() {
+    this.getMostPopularUser();
+  }
 
   searchUser() {
     this.tweeterService.getUser(this.userName)
@@ -72,6 +79,33 @@ export class AppComponent {
       },
       (error) => {
         console.log(error);
+        this.messages = [];
+      }
+    );
+  }
+
+  getMostPopularUser() {
+    this.tweeterService.getMostPopularUser()
+    .subscribe(
+      (response) => {
+        this.mostPopular = response;
+      },
+      (error) => {
+        console.log(error);
+        this.messages = [];
+      }
+    );
+  }
+
+  getMostPopularFollower() {
+    this.tweeterService.getMostPopularFollower()
+    .subscribe(
+      (response) => {
+        this.popularFollowers = response;
+      },
+      (error) => {
+        console.log(error);
+        this.popularFollowers = [];
       }
     );
   }
@@ -90,8 +124,7 @@ export class AppComponent {
         if (!this.following) {
           this.following = [];
         }
-        console.log(this.followers);
-        console.log(this.following);
+        this.getMostPopularFollower();
       },
       (error) => {
         console.log(error);
@@ -109,6 +142,26 @@ export class AppComponent {
         this.showSuccess = true;
         this.showFailure = false;
         this.getMessages();
+      },
+      (error) => {
+        console.log(error);
+        this.errorMsg = POST_MESSAGE_FAILURE_MESSAGE;
+        this.showSuccess = false;
+        this.showFailure = true;
+      }
+    );
+  }
+
+  unFollowUser(userName: string, unFollowUser: string) {
+    const messageRequest = {userName: this.userName, content: this.message};
+    console.log(messageRequest);
+    this.tweeterService.unfollow(userName,unFollowUser)
+    .subscribe(
+      (response) => {
+        this.errorMsg = UNFOLLOW_USER_MESSAGE_SUCCESS_MESSAGE;
+        this.showSuccess = true;
+        this.showFailure = false;
+        this.getConnections();
       },
       (error) => {
         console.log(error);
@@ -176,5 +229,7 @@ export class AppComponent {
     document.getElementById(tabName).style.display = 'block';
     // evt.target.className += ' w3-red';
 }
+
+
 
 }

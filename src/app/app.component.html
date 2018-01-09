@@ -27,11 +27,55 @@
           <span [hidden]="!showSuccess" class="success"> {{errorMsg}} </span>
           <span [hidden]="!showFailure" class="failure"> {{errorMsg}} </span>
       </div>
+
+              <div class="searchUser">
+                  <input type="text" placeholder="userName" [(ngModel)]=userName>
+                  <button (click)="searchUser()">Search User</button>
+                  <div [hidden]=!mostPopular >
+                      <table style="width:10%;float:right;">
+                          <tbody>
+                            <tr>
+                              <th>
+                                  <img src="https://charged.media/assets/images/MostPopular-Badge.png" />
+                              </th>
+                              <th>
+                                  <div class="userInfo">
+                                      <table>
+                                        <tbody >
+                                          <tr>
+                                            <td colspan="2">Name</td>
+                                            <td>{{mostPopular ? mostPopular.lastName : ''}},{{mostPopular ? mostPopular.firstName : ''}}</td>
+                                          </tr>
+                                          <tr>
+                                            <td colspan="2">userName</td>
+                                            <td>{{mostPopular ? mostPopular.userName : ''}}</td>
+                                          </tr>
+                                          <tr>
+                                            <td colspan="2">age</td>
+                                            <td>{{mostPopular ? mostPopular.age : ''}}</td>
+                                          </tr>
+                                          <tr>
+                                            <td colspan="2">gender</td>
+                                            <td>{{mostPopular ? mostPopular.gender : ''}}</td>
+                                          </tr>
+                                          <tr>
+                                            <td colspan="2"> email </td>
+                                            <td>{{mostPopular ? mostPopular.email : ''}} </td>
+                                          </tr>
+                                        </tbody>
+                                      </table>
+                                  </div>
+                              </th>
+                            </tr>
+                          </tbody>
+                        </table>
+                  </div>
+                  
+              </div>
+
       
-      <div class="searchUser">
-          <input type="text" placeholder="userName" [(ngModel)]=userName>
-          <button (click)="searchUser()">Search User</button>
-      </div>
+
+      
       
       
       <div class="profile " [hidden] = "!showProfile">
@@ -49,52 +93,27 @@
               <th>
                   <div class="userInfo">
                       <table>
-                        <tbody col>
-
+                        <tbody >
                           <tr>
-                            <td colspan="2">
-                                Name
-                            </td>
-                            <td>
-                                {{user ? user.lastName : ''}},{{user ? user.firstName : ''}}
-                            </td>
+                            <td colspan="2">Name</td>
+                            <td>{{user ? user.lastName : ''}},{{user ? user.firstName : ''}}</td>
                           </tr>
                           <tr>
-                            <td colspan="2">
-                                userName
-                            </td>
-                            <td>
-                                {{user ? user.userName : ''}}
-                            </td>
-                               
+                            <td colspan="2">userName</td>
+                            <td>{{user ? user.userName : ''}}</td>
                           </tr>
                           <tr>
-                              <td colspan="2">
-                                  age
-                              </td>
-                              <td>
-                                  {{user ? user.age : ''}}
-                              </td>
-                                 
-                            </tr>
-                            <tr>
-                                <td colspan="2">
-                                    gender
-                                </td>
-                                <td>
-                                    {{user ? user.gender : ''}}
-                                </td>
-                                   
-                              </tr>
-                              <tr>
-                                  <td colspan="2">
-                                      email
-                                  </td>
-                                  <td>
-                                      {{user ? user.email : ''}}
-                                  </td>
-                                     
-                                </tr>
+                            <td colspan="2">age</td>
+                            <td>{{user ? user.age : ''}}</td>
+                          </tr>
+                          <tr>
+                            <td colspan="2">gender</td>
+                            <td>{{user ? user.gender : ''}}</td>
+                          </tr>
+                          <tr>
+                            <td colspan="2"> email </td>
+                            <td>{{user ? user.email : ''}} </td>
+                          </tr>
                         </tbody>
                       </table>
                   </div>
@@ -113,29 +132,57 @@
             <button class="w3-bar-item w3-button tablink" (click)="openTab($event,'messages')">messages</button>
             <button class="w3-bar-item w3-button tablink" (click)="openTab($event,'followers')">followers</button>
             <button class="w3-bar-item w3-button tablink" (click)="openTab($event,'following')">following</button>
+            <button class="w3-bar-item w3-button tablink" (click)="openTab($event,'popularFollowers')">popular Followers</button>
         </div>
       
-        <div id="messages" class="w3-container w3-border tab" style="display:none">
+        <div id="messages" class="w3-container w3-border tab tab-padding" style="display:none">
           <div #messagesDiv *ngIf="messages.length > 0">
             <div *ngFor="let msg of messages; let odd=odd; let even=even; ">
-                <span [ngClass]="{ odd: odd, even: even }">{{msg.content}}</span>
+                <span ><img src="http://www.drsfostersmith.com/images/masthead/icon_chat.png" />{{msg.content}}</span>
             </div> 
           </div>
         </div>
       
-      <div id="followers" class="w3-container w3-border tab" style="display:none">
+      <div id="followers" class="w3-container w3-border tab tab-padding" style="display:none">
           <div #followersDiv *ngIf="followers.length > 0">
             <div *ngFor="let f of followers; let odd=odd; let even=even; ">
-                <span [ngClass]="{ odd: odd, even: even }">{{f.userName}}, {{f.firstName}}, {{f.lastName}}, {{f.age}}, {{f.gender}}, {{f.email}}</span>
+                <span class="followerInfo"><img src="https://d1u5p3l4wpay3k.cloudfront.net/cod_esports_gamepedia_en/thumb/0/0c/Player.png/40px-Player.png?version=a8fdc6fe3406e1f47727c16c208c877f" />
+                  {{f.firstName}}, {{f.lastName}}, {{f.age}}, {{f.gender}}, {{f.email}}</span>
             </div> 
           </div>
       </div>
       
-      <div id="following" class="w3-container w3-border tab" style="display:none">
+      <div id="following" class="w3-container w3-border tab tab-padding" style="display:none;width:100%">
           <div #followingDiv *ngIf="following.length > 0">
-            <div *ngFor="let f of following; let odd=odd; let even=even; ">
-                <span [ngClass]="{ odd: odd, even: even }">{{f.userName}}, {{f.firstName}}, {{f.lastName}}, {{f.age}}, {{f.gender}}, {{f.email}}</span>
-            </div> 
+              <div  *ngFor="let f of following;" >
+                <div >
+                    <img src="https://d1u5p3l4wpay3k.cloudfront.net/cod_esports_gamepedia_en/thumb/0/0c/Player.png/40px-Player.png?version=a8fdc6fe3406e1f47727c16c208c877f" />
+                    {{f.firstName}}, {{f.lastName}}, {{f.age}}, {{f.gender}}, {{f.email}}
+                    <div class="unFollowText">
+                        <a href=# (click)=unFollowUser(userName,f.userName)>unFollow</a>
+                    </div>
+                </div>
+                
+              </div>
+              
+          </div>
+      </div>
+
+      <div id="popularFollowers" class="w3-container w3-border tab tab-padding" style="display:none;width:100%">
+          <div #popularFollowersDiv *ngIf="popularFollowers.length > 0">
+              <table style="width:100%;">
+                  <tbody >
+                    <th colspan="8"> Username</th>
+                    <th colspan="2"> popular Follower Username</th>
+                    <th> Followers count</th>
+                      <tr  *ngFor="let pf of popularFollowers;" >
+                        <td colspan="9"> {{pf.userName }}</td>
+                        <td colspan="2"> {{pf.mostPopularFollower }}</td>
+                        <td> {{pf.numberOfFollowers}} </td>
+                      </tr>
+                  </tbody>
+                </table>
+              
           </div>
       </div>
       
