@@ -26,3 +26,9 @@ Before running the tests make sure you are serving the app via `ng serve`.
 ## Further help
 
 To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+
+
+## Overview of the application
+
+The screenshot for the tweeter app looks like below,
+![alt text](https://drive.google.com/file/d/1_q5sETMM01LkbV0V7cyaHFiVSGEq8BQ1/view?usp=sharing)
