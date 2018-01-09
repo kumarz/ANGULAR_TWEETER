@@ -31,4 +31,4 @@ To get more help on the Angular CLI use `ng help` or go check out the [Angular C
 ## Overview of the application
 
 The screenshot for the tweeter app looks like below,
-![alt text](/screenshots/AgnularUI.png "Tweeter App")
+![alt text](/screenshots/AgnularUI.PNG "Tweeter App")
