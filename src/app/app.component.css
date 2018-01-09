@@ -12,11 +12,16 @@
 .searchUser{
     margin-left: 2%;
     margin-top: 3%;
+    width:50%;
 }
 
 .padding{
     margin-left: 2%;
     margin-top: 3%;
+}
+
+.tab-padding{
+    margin-left: 2%;
 }
 
 .errorMsg{
@@ -59,4 +64,17 @@
     clear:both;
     text-align: left;
     font-weight: 400;
+}
+
+.unFollowText{
+    
+    float: right;
+    text-align: right;
+    color: red;
+    
+}
+
+.followerInfo{
+    width: 60%;
+    
 }
